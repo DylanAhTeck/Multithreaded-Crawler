@@ -20,6 +20,8 @@ public class CustomCrawler extends WebCrawler {
 	private static FileWriter visitWriter;
 	private static FileWriter urlWriter;
 	
+	CrawlStat myCrawlStat;
+	
 	public CustomCrawler () {  
 		try {
 			fetchWriter =  new FileWriter("fetch_FoxNews.csv");
@@ -29,7 +31,7 @@ public class CustomCrawler extends WebCrawler {
 			visitWriter.append("URL,File Size,Number of Links Found,Content-Type \n");
 			
 			urlWriter = new FileWriter("urls_FoxNews.csv");
-			urlWriter.append("URL,Resides in Website\n");
+			urlWriter.append("URL,Resides in Website \n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -103,10 +105,9 @@ public class CustomCrawler extends WebCrawler {
 	  String contentType = page.getContentType();
 	  appendToCSV(Arrays.asList(url, fileSize, numOfOutgoingLinks, contentType), visitWriter);
 	
-
-	  System.out.println("Text length: " + text.length());
-	  System.out.println("Html length: " + html.length());
-	  System.out.println("Number of outgoing links: " + links.size());
+//	  System.out.println("Text length: " + text.length());
+//	  System.out.println("Html length: " + html.length());
+//	  System.out.println("Number of outgoing links: " + links.size());
 	  }
 	  
 	  }

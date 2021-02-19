@@ -8,13 +8,13 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 public class Controller {
  public static void main(String[] args) throws Exception {
  String crawlStorageFolder = "/Users/dylanahteck/eclipse-workspace/WebCrawler/data/crawl";
- int numberOfCrawlers = 7;
+ int numberOfCrawlers = 2;
  CrawlConfig config = new CrawlConfig();
  config.setCrawlStorageFolder(crawlStorageFolder);
  
  //Settings
- config.setPolitenessDelay(1000);
- config.setMaxPagesToFetch(20000);
+ config.setPolitenessDelay(200);
+ config.setMaxPagesToFetch(15);
  config.setMaxDepthOfCrawling(16);
  
  /*
