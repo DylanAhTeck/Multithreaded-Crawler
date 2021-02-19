@@ -2,7 +2,16 @@ public class CrawlStat {
     private int totalProcessedPages;
     private long totalLinks;
     private long totalTextSize;
-
+    private long totalPagesFetched;
+    
+    public void incTotalPagesFetched() {
+        this.totalPagesFetched++;
+    }
+    
+    public long getTotalPagesFetched() {
+        return this.totalPagesFetched;
+    }
+    
     public int getTotalProcessedPages() {
         return totalProcessedPages;
     }
