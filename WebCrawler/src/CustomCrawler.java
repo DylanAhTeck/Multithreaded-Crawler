@@ -18,52 +18,55 @@ public class CustomCrawler extends WebCrawler {
 	
 	private static FileWriter fetchWriter;
 	private static FileWriter visitWriter;
-	public CustomCrawler () {
-		
-		
-		  
+	private static FileWriter urlWriter;
+	
+	public CustomCrawler () {  
 		try {
 			fetchWriter =  new FileWriter("fetch_FoxNews.csv");
 			fetchWriter.append("URL,Status\n");
 			
 			visitWriter = new FileWriter("visit_FoxNews.csv");
 			visitWriter.append("URL,File Size,Number of Links Found,Content-Type \n");
+			
+			urlWriter = new FileWriter("urls_FoxNews.csv");
+			urlWriter.append("URL,Resides in Website\n");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
+	
 	@Override
 	 public boolean shouldVisit(Page referringPage, WebURL url) {
+		
 	 String href = url.getURL().toLowerCase();
+	 String residesInWebsite = href.startsWith("https://www.foxnews.com/") ? "OK" : "N_OK";
+	 appendToCSV(Arrays.asList(href, residesInWebsite), urlWriter);
+	 
 	 return !FILTERS.matcher(href).matches()
 	 && href.startsWith("https://www.foxnews.com/");
-		
 	}
 	
 	public void appendToCSV(List<String> rowData, FileWriter writer) {
-		
-		  try {
+		try {
 			writer.append(String.join(",", rowData));
 			writer.append("\n");
 			writer.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		  
 	}
+	
 	@Override 
 	public void onBeforeExit () {
 		try {
 			fetchWriter.close();
+			urlWriter.close();
+			visitWriter.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
+	
 	 /**
 	  * This function is called when a page is fetched and ready
 	  * to be processed by your program.
@@ -76,7 +79,7 @@ public class CustomCrawler extends WebCrawler {
 		
 	  String url = page.getWebURL().getURL();
 //	  System.out.println("URL: " + url);
-	  System.out.println(url + ", " + page.getStatusCode());
+//	  System.out.println(url + ", " + page.getStatusCode());
 	  String statusCode = String.valueOf(page.getStatusCode());
 	  appendToCSV(Arrays.asList(url, statusCode), fetchWriter);
 	  
